@@ -61,7 +61,7 @@ class StudentSchema(Schema):
 
 @app.route('/api', methods = ['GET'])
 def api_main():
-    return jsonify('Hello World!'), 200
+    return jsonify('This API hepls ou to fill mysql database using some methods like:/nPOST, PUT, PATCH, GET. With method POST, PUT, PATCH you receive answer code 201 which show you the data you want to add. With GET you receive code 200 which shows you data by request'), 200
  
 @app.route('/api/students', methods=['GET'])
 def get_all_students():
@@ -90,6 +90,55 @@ def add_student():
     serializer = StudentSchema()
     data = serializer.dump(new_student)
     return jsonify(data), 201
+
+#added modify feature
+@app.route('/api/students/modify/<int:id>', methods=['PATCH'])
+def edit_student(id):
+    json_data = request.get_json()
+    cur_student = Student.get_by_id(id)
+    if json_data.get('name'):
+        cur_student.name = json_data.get('name')
+    if json_data.get('email'):
+        cur_student.email = json_data.get('email')
+    if json_data.get('age'):
+        cur_student.age = json_data.get('age')
+    if json_data.get('cellphone'):
+        cur_student.age = json_data.get('cellphone')
+
+    cur_student.save()
+    serializer = StudentSchema()
+    response = serializer.dump(cur_student)
+    return jsonify(response), 201
+
+#added change feature
+@app.route('/api/students/change/<int:id>', methods=['PUT'])
+def change_student(id):
+    json_data = request.get_json()
+    cur_student = Student.get_by_id(id)
+    new_data = Student(
+        name= json_data.get('name'),
+        email=json_data.get('email'),
+        age=json_data.get('age'),
+        cellphone=json_data.get('cellphone')
+    )
+    cur_student.name = new_data.name
+    cur_student.email = new_data.email
+    cur_student.age = new_data.age
+    cur_student.cellphone = new_data.cellphone
+
+    cur_student.save()
+    serializer = StudentSchema()
+    response = serializer.dump(cur_student)
+    return jsonify(response), 201
+
+#added delete feature
+@app.route('/api/students/delete/<int:id>', methods=['POST'])
+def del_student(id):
+    student_info = Student.get_by_id(id)
+    student_info.delete()
+    serializer = StudentSchema()
+    response = serializer.dump(student_info)
+    return jsonify(response), 201
 
 if __name__ == '__main__':
     if not database_exists(engine.url):
