@@ -142,12 +142,12 @@ def del_student(id):
 
 #added synthetic heath check "OK"
 @app.route('/api/heath-check/ok', methods=['GET'])
-def healthcheck_ok(id):
+def healthcheck_ok():
     return jsonify('Everything is fine'), 200
 
 #added synthetic heath check "BAD"
 @app.route('/api/heath-check/bad', methods=['GET'])
-def healthcheck_bad(id):
+def healthcheck_bad():
     return jsonify('Everything is fckd up'), 500
 
 if __name__ == '__main__':
