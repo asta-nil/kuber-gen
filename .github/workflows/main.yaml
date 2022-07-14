@@ -3,9 +3,7 @@ name: Run-linter
 on:
   push:
     branches:
-      - main
-    paths:
-      - app/   
+      - main  
 
 jobs:
   lint:
