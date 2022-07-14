@@ -1,7 +1,26 @@
-name: CI-CD-genesis
+name: Run-linter
 
 on:
-
-env:
+  push:
+    branches:
+      - master
+    paths:
+      - app/   
 
 jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    name: Lint
+    steps:
+      - name: Git-checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4 
+        with:
+          python-version: '3.10'
+
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+
+
