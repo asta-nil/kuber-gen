@@ -15,7 +15,8 @@ db_hostname = os.environ.get('MYSQL_HOST')
 db_name = os.environ.get('MYSQL_DATABASE')
 
 DB_URI = 'mysql+pymysql://{db_username}:{db_password}@{db_host}/{database}'.format(
-    db_username=db_user, db_password=db_pass, db_host=db_hostname, database=db_name)
+    db_username=db_user, db_password=db_pass, 
+    db_host=db_hostname, database=db_name)
 
 engine = create_engine(DB_URI, echo=True)
 
@@ -23,6 +24,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
 
 class Student(db.Model):
     __tablename__ = "student"
@@ -35,7 +37,6 @@ class Student(db.Model):
     @classmethod
     def get_all(cls):
         return cls.query.all()
-    
     @classmethod
     def get_by_id(cls, id):
         return cls.query.get_or_404(id)
@@ -51,6 +52,7 @@ class Student(db.Model):
     def change(self):
         db.session.change(self)
         db.session.commit()
+
 
 class StudentSchema(Schema):
     id = fields.Integer()
