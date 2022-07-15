@@ -85,10 +85,10 @@ def get_student(id):
 def add_student():
     json_data = request.get_json()
     new_student = Student(
-        name= json_data.get('name'),
-        email=json_data.get('email'),
-        age=json_data.get('age'),
-        cellphone=json_data.get('cellphone')
+        name = json_data.get('name'),
+        email = json_data.get('email'),
+        age = json_data.get('age'),
+        cellphone = json_data.get('cellphone')
     )
     new_student.save()
     serializer = StudentSchema()
@@ -122,10 +122,10 @@ def change_student(id):
     json_data = request.get_json()
     cur_student = Student.get_by_id(id)
     new_data = Student(
-        name= json_data.get('name'),
-        email=json_data.get('email'),
-        age=json_data.get('age'),
-        cellphone=json_data.get('cellphone')
+        name = json_data.get('name'),
+        email = json_data.get('email'),
+        age = json_data.get('age'),
+        cellphone = json_data.get('cellphone')
     )
     cur_student.name = new_data.name
     cur_student.email = new_data.email
