@@ -140,10 +140,12 @@ def del_student(id):
     response = serializer.dump(student_info)
     return jsonify(response), 201
 
+
 #added synthetic heath check "OK"
 @app.route('/api/heath-check/ok', methods=['GET'])
 def healthcheck_ok():
     return jsonify('Everything is fine'), 200
+
 
 #added synthetic heath check "BAD"
 @app.route('/api/heath-check/bad', methods=['GET'])
