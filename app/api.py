@@ -59,9 +59,11 @@ class StudentSchema(Schema):
     age = fields.Integer()
     cellphone = fields.Str()
 
+
 @app.route('/api', methods = ['GET'])
 def api_main():
     return jsonify('This API hepls ou to fill mysql database using some methods like:\nPOST, PUT, PATCH, GET. With method POST, PUT, PATCH you receive answer code 201 which show you the data you want to add. With GET you receive code 200 which shows you data by request\n/api/students uses GET request to get all data\n/api/students/get/id uses GET request to get data by id\n/api/students/add uses POST request to add new data\n/api/students/modify/id uses PATCH request to modify part of data by id\n/api/students/change/id uses PUT request to change all data by id\n/api/students/delete/id uses POST request to delete data\n/api/health-check/ok and api/health-check/bad use GET request to check health of script'), 200
+
 
 @app.route('/api/students', methods=['GET'])
 def get_all_students():
@@ -70,6 +72,7 @@ def get_all_students():
     response = student_list.dump(students)
     return jsonify(response), 200
 
+
 @app.route('/api/students/get/<int:id>', methods = ['GET'])
 def get_student(id):
     student_info = Student.get_by_id(id)
@@ -77,6 +80,7 @@ def get_student(id):
     response = serializer.dump(student_info)
     return jsonify(response), 200
  
+
 @app.route('/api/students/add', methods = ['POST'])
 def add_student():
     json_data = request.get_json()
@@ -91,7 +95,8 @@ def add_student():
     data = serializer.dump(new_student)
     return jsonify(data), 201
 
-#added modify feature
+
+# added modify feature
 @app.route('/api/students/modify/<int:id>', methods=['PATCH'])
 def edit_student(id):
     json_data = request.get_json()
@@ -110,7 +115,8 @@ def edit_student(id):
     response = serializer.dump(cur_student)
     return jsonify(response), 201
 
-#added change feature
+
+# added change feature
 @app.route('/api/students/change/<int:id>', methods=['PUT'])
 def change_student(id):
     json_data = request.get_json()
@@ -131,7 +137,8 @@ def change_student(id):
     response = serializer.dump(cur_student)
     return jsonify(response), 201
 
-#added delete feature
+
+# added delete feature
 @app.route('/api/students/delete/<int:id>', methods=['POST'])
 def del_student(id):
     student_info = Student.get_by_id(id)
@@ -141,13 +148,13 @@ def del_student(id):
     return jsonify(response), 201
 
 
-#added synthetic heath check "OK"
+# added synthetic heath check "OK"
 @app.route('/api/heath-check/ok', methods=['GET'])
 def healthcheck_ok():
     return jsonify('Everything is fine'), 200
 
 
-#added synthetic heath check "BAD"
+# added synthetic heath check "BAD"
 @app.route('/api/heath-check/bad', methods=['GET'])
 def healthcheck_bad():
     return jsonify('Everything is fckd up'), 500
