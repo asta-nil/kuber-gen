@@ -35,6 +35,7 @@ class Student(db.Model):
     @classmethod
     def get_all(cls):
         return cls.query.all()
+
     @classmethod
     def get_by_id(cls, id):
         return cls.query.get_or_404(id)
@@ -81,7 +82,7 @@ def get_student(id):
     return jsonify(response), 200
  
 
-@app.route('/api/students/add', methods = ['POST'])
+@app.route('/api/students/add', methods=['POST'])
 def add_student():
     json_data = request.get_json()
     new_student = Student(
