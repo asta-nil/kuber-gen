@@ -14,7 +14,7 @@ db_pass = os.environ.get('MYSQL_PASSWORD')
 db_hostname = os.environ.get('MYSQL_HOST')
 db_name = os.environ.get('MYSQL_DATABASE')
 
-DB_URI = 'mysql+pymysql://{db_username}:{db_password}@{db_host}/{database}'.format(db_username=db_user, db_password=db_pass, db_host=db_hostname, database=db_name)
+DB_URI = 'mysql+pymysql://{db_username}:{db_password}@{db_host}/{database}'.format(db_username=db_user, db_password=db_pass, db_host=db_hostname, database=db_name) # noqa: E731
 
 engine = create_engine(DB_URI, echo=True)
 
@@ -63,7 +63,7 @@ class StudentSchema(Schema):
 
 @app.route('/api', methods=['GET'])
 def api_main():
-    return jsonify('This API hepls ou to fill mysql database using some methods like:\nPOST, PUT, PATCH, GET. With method POST, PUT, PATCH you receive answer code 201 which show you the data you want to add. With GET you receive code 200 which shows you data by request\n/api/students uses GET request to get all data\n/api/students/get/id uses GET request to get data by id\n/api/students/add uses POST request to add new data\n/api/students/modify/id uses PATCH request to modify part of data by id\n/api/students/change/id uses PUT request to change all data by id\n/api/students/delete/id uses POST request to delete data\n/api/health-check/ok and api/health-check/bad use GET request to check health of script'), 200
+    return jsonify('This API hepls ou to fill mysql database using some methods like:\nPOST, PUT, PATCH, GET. With method POST, PUT, PATCH you receive answer code 201 which show you the data you want to add. With GET you receive code 200 which shows you data by request\n/api/students uses GET request to get all data\n/api/students/get/id uses GET request to get data by id\n/api/students/add uses POST request to add new data\n/api/students/modify/id uses PATCH request to modify part of data by id\n/api/students/change/id uses PUT request to change all data by id\n/api/students/delete/id uses POST request to delete data\n/api/health-check/ok and api/health-check/bad use GET request to check health of script'), 200 # noqa: E731
 
 
 @app.route('/api/students', methods=['GET'])
@@ -80,7 +80,7 @@ def get_student(id):
     serializer = StudentSchema()
     response = serializer.dump(student_info)
     return jsonify(response), 200
- 
+
 
 @app.route('/api/students/add', methods=['POST'])
 def add_student():
