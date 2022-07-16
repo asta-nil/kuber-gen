@@ -21,9 +21,9 @@ jobs:
       - name: flake8 Lint
         uses: py-actions/flake8@v2
 
-  built_and_push:
+  build:
     runs-on: ubuntu-latest
-    name: Built and push docker image
+    name: Build
     needs: Lint
     outputs:
       commit_hash: ${{ steps.commit_hash.outputs.commit_hash }}
@@ -33,6 +33,9 @@ jobs:
 
       - name: commit_hash 
         run: echo "::set-output name=commit_hash::${GIHUB_SHA::7}"
+
+      - name: get environment
+        run: cp app/.env.example app/.env 
 
       - name: Build docker-compose
         run: docker-compose up -d
