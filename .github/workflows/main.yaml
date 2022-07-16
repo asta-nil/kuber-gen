@@ -71,7 +71,7 @@ jobs:
           username: ${{ env.USERNAME }}
           key: ${{ secrets.KEY }}
           port: 22
-          script: |
+          script: | 
             # login docker
             sudo docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
             sudo docker stop flask
