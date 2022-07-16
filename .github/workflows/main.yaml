@@ -29,14 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Build_and_push
     needs: Lint
-    outputs:
-      commit_hash: ${{ steps.commit_hash.outputs.commit_hash }}
     steps:
       - name: Git-checkout
         uses: actions/checkout@v3
-
-      - name: commit_hash 
-        run: echo "::set-output name=commit_hash::${GIHUB_SHA::7}"
 
       - name: get environment
         run: cp app/.env.example app/.env 
@@ -77,6 +72,15 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
-            cd flask
-            sudo docker compose up -d
+            # login docker
+            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
+            docker stop flask
+            docker rm flask
+
+            # run new container
+            docker run -d \
+            --restart always \
+            -p 80:5000 \
+            --name flask \
+            ${{ env.REGISTRY }}:latest
             
