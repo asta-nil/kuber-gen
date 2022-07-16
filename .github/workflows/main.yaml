@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: astanil/flask-app
+  REGISTRY: astanil/flask
 
 jobs:
   lint:
@@ -49,9 +49,6 @@ jobs:
 
       - name: Build docker-compose
         run: docker-compose up -d
-
-      - name: change tag name
-        run: docker tag flask_flask-app:latest astanil/flask:latest
 
       - name: push
         uses: docker/build-push-action@v3
