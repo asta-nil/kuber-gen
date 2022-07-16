@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: astanil/flask-app
+  REGISTRY: astanil/flask-app:first
 
 jobs:
   lint:
