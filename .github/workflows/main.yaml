@@ -59,7 +59,7 @@ jobs:
           context: ./app
           push: true
           tags: |
-            ${{ env.REGISTRY }}:${{ steps.commit_hash.outputs.commit_hash }}
+            ${{ env.REGISTRY }}:latest
  
   deploy: 
     runs-on: ubuntu-latest
