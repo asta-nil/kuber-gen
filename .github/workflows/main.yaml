@@ -39,7 +39,7 @@ jobs:
 
       - name: Build docker-compose
         run: docker-compose up -d
- 
+
   deploy: 
     runs-on: ubuntu-latest
     name: Deploy
