@@ -25,9 +25,9 @@ jobs:
       - name: flake8 Lint
         uses: py-actions/flake8@v2
 
-  build:
+  build_and_push:
     runs-on: ubuntu-latest
-    name: Build
+    name: Build and push
     needs: Lint
     outputs:
       commit_hash: ${{ steps.commit_hash.outputs.commit_hash }}
@@ -49,6 +49,9 @@ jobs:
 
       - name: Build docker-compose
         run: docker-compose up -d
+
+      - name: change tag name
+        run: docker tag flask_flask-app:latest astanil/flask:latest
 
       - name: push
         uses: docker/build-push-action@v3
