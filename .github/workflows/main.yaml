@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Show secret
-        run: echo ${{ DOCKERHUB_USERNAME  }} 
+        run: echo ${{ secrets.DOCKERHUB_USERNAME  }} 
 
       
 
