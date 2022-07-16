@@ -56,5 +56,6 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
+            cd flask
             docker-compose up -d
             
