@@ -24,6 +24,7 @@ jobs:
   built_and_push:
     runs-on: ubuntu-latest
     name: Built and push docker image
+    needs: Lint
     outputs:
       commit_hash: ${{ steps.commit_hash.outputs.commit_hash }}
     steps:
@@ -38,9 +39,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       
-      - name: Show secret
-        run: echo ${{ secrets.DOCKERHUB_USERNAME  }} 
 
       
 
