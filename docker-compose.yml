@@ -3,6 +3,7 @@ version: '3.8'
 services:
   flask-app: 
     container_name: events_api
+    image: astanil/flask:latest
     build: ./app
     ports: 
       - "5000:5000"
