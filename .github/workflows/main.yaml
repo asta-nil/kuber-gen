@@ -53,7 +53,6 @@ jobs:
         with:
           host: ${{ env.HOST }}
           username: ${{ env.USERNAME }}
-          key: ${{ secrets.KEY }}
           port: 22
           script: |
             cd flask
