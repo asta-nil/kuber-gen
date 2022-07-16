@@ -49,7 +49,7 @@ jobs:
 
       - name: Build docker-compose
         run: docker-compose up -d
-        
+
       - name: docker
         run: sudo docker tag flask_flask-app:latest astanil/flask:latest  
         
@@ -58,7 +58,7 @@ jobs:
         with:
           context: ./app/
           push: true
-          tags:
+          tags: |
             ${{ env.REGISTRY }}:${{ steps.commit_hash.outputs.commit_hash }}
  
   deploy: 
