@@ -88,7 +88,5 @@ jobs:
         REQUEST: ["http://3.74.156.7:5000/api/heath-check/ok", "http://3.73.123.245:5000/api/heath-check/ok"]
     steps:
       - name: "Call API"
-        uses: indiesdev/curl@v1.1
-        with:
-          url: ${{ matrix.REQUEST }} 
-          method: GET
+        run:
+          echo "$(curl -s -I ${{ matrix.REQUEST }} -X GET)|cat -A"
