@@ -77,5 +77,5 @@ jobs:
 
             # run new container
             cd flask/
-            sudo docker compose up
+            sudo docker compose up -d
             
