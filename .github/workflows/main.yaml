@@ -44,9 +44,6 @@ jobs:
 
       - name: Build docker-compose
         run: docker-compose up -d
-
-      - name: Connect tags
-        run: sudo docker tag flask_flask-app:latest astanil/flask:latest  
         
       - name: push
         uses: docker/build-push-action@v3
