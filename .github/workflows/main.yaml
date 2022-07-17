@@ -57,23 +57,23 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     needs: Build_and_push
-    env:
-      HOST_1: 3.74.156.7
-      HOST_2: 3.73.123.245
-      USERNAME: ubuntu
+    strategy:
+      matrix:
+        HOST: [3.74.156.7, 3.73.123.245]
+        USERNAME: [ubuntu]
     steps:
       - name: Deploy to EC2 instance via SSH
         uses: appleboy/ssh-action@v0.1.3
         with:
-          host: ${{ env.HOST_1 }}
-          username: ${{ env.USERNAME }}
+          host: ${{ matrix.HOST }}
+          username: ${{ matrix.USERNAME }}
           key: ${{ secrets.KEY }}
           port: 22
           script: | 
             # login docker
             sudo docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-            sudo docker stop flask
-            sudo docker rm flask
+            sudo docker stop flask-app
+            sudo docker rm flask-app
 
             # run new container
             cd flask/
