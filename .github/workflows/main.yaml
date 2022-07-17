@@ -89,4 +89,4 @@ jobs:
     steps:
       - name: "Call API"
         run:
-          echo "$(curl -s -I ${{ matrix.REQUEST }} -X GET)"
+          curl -s -I ${{ matrix.REQUEST }} -X GET
