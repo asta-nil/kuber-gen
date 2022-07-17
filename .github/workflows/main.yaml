@@ -78,4 +78,16 @@ jobs:
             # run new container
             cd flask/
             sudo docker compose up -d
-            
+
+  get_request:
+    name: "Perform REST API"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        REQUEST: [http://3.74.156.7:5000/api/heath-check/ok, http://3.73.123.245:5000/api/heath-check/ok]
+    steps:
+      - name: "Call API"
+        uses: indiesdev/curl@v1.1
+        with:
+          url: ${{ matrix.REQUEST }} 
+          method: GET
