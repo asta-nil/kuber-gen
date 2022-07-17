@@ -80,7 +80,8 @@ jobs:
             # run new container
             sudo docker run -d \
             --restart always \
-            -p 5000:5000 \
+            -p 80:5000 \
             --name flask \
+            --rm \
             ${{ env.REGISTRY }}:latest
             
