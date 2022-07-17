@@ -78,10 +78,5 @@ jobs:
             sudo docker rm flask
 
             # run new container
-            sudo docker run -d \
-            --restart always \
-            -p 5000:5000 \
-            --name flask \
-            --rm \
-            ${{ env.REGISTRY }}:latest
+            sudo docker compose up -d
             
