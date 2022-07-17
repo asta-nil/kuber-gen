@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build docker-compose
-        run: docker-compose up -d
+        run: docker-compose up -d --no-deps --build flask-app
         
       - name: push
         uses: docker/build-push-action@v3
