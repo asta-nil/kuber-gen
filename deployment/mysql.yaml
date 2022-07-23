@@ -29,7 +29,7 @@ spec:
       image: mysql:8
       imagePullPolicy: Always
       resources:
-        requests:
+        requests: 
           cpu: 200m
           memory: 512Mi
         limits:
