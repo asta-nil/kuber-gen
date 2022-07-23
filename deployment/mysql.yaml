@@ -56,4 +56,17 @@ metadata:
               secretKeyRef:
                 name: mysql-secret
                 key: mysql-root-password
-
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: mysql
+  namespace: flask-app
+spec:
+  selector: 
+    name: mysql
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: mysql-container
+      name: mysql
