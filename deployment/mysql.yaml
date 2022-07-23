@@ -23,39 +23,39 @@ metadata:
   namespace: flask-app
   labels:
     name: mysql
-  spec:
-    container:
-      - name: mysql
-        image: mysql:8
-        imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: 200m
-            memory: 512Mi
-          limit:
-            cpu: 200m
-            memory: 512Mi
-        ports:
-          - containerPort: 3306
-            name: mysql-container
-        env: 
-          - name: MYSQL_USER
-            value: user
-          - name: MYSQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: mysql-password
-          - name: MYSQL_DATABASE
-            valueFrom:
-               configMapKeyRef:
-                name: mysql-config
-                key: mysql-db-name
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: mysql-root-password
+spec:
+  containers:
+    - name: mysql
+      image: mysql:8
+      imagePullPolicy: Always
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: 200m
+          memory: 512Mi
+      ports:
+        - containerPort: 3306
+          name: mysql-container
+      env: 
+        - name: MYSQL_USER
+          value: user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-password
+        - name: MYSQL_DATABASE
+          valueFrom:
+             configMapKeyRef:
+              name: mysql-config
+              key: mysql-db-name
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-password
 ---
 apiVersion: v1
 kind: Service
