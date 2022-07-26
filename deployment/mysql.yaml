@@ -5,8 +5,8 @@ metadata:
   name: mysql-secret
   namespace: flask-app
 data:
-  mysql-password: RDN2JXBzMTIzNAo=
-  mysql-root-password: RDN2JXBzMTIzNAo=
+  mysql-password: RDN2JXBzMTIzNA==
+  mysql-root-password: RDN2JXBzMTIzNA==
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -16,46 +16,63 @@ metadata:
 data:
   mysql-db-name: db
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: mysql
   namespace: flask-app
   labels:
-    name: mysql
+    app: mysql
 spec:
-  containers:
-    - name: mysql
-      image: mysql:8
-      imagePullPolicy: Always
-      resources:
-        requests: 
-          cpu: 200m
-          memory: 512Mi
-        limits:
-          cpu: 200m
-          memory: 512Mi
-      ports:
-        - containerPort: 3306
-          name: mysql-container
-      env: 
-        - name: MYSQL_USER
-          value: user
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-password
-        - name: MYSQL_DATABASE
-          valueFrom:
-             configMapKeyRef:
-              name: mysql-config
-              key: mysql-db-name
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: mysql-root-password
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8-debian
+          imagePullPolicy: Always
+          resources:
+            requests: 
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: 200m
+              memory: 512Mi
+          ports:
+            - containerPort: 3306
+              name: mysql-container
+          env: 
+            - name: MYSQL_USER
+              value: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql-db-name
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-root-password
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-data
 ---
 apiVersion: v1
 kind: Service
@@ -70,3 +87,4 @@ spec:
       port: 3306
       targetPort: mysql-container
       name: mysql
+
