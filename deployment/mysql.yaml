@@ -35,7 +35,7 @@ spec:
         app: mysql
     spec:
       containers:
-        - name: mysql
+        - name: mysql 
           image: mysql:8-debian
           imagePullPolicy: Always
           resources:
@@ -87,4 +87,4 @@ spec:
       port: 3306
       targetPort: mysql-container
       name: mysql
-
+  type: LoadBalancer
